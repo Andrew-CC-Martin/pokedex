@@ -1,17 +1,42 @@
-const baseUrl = 'https://pokeapi.co/api/v2/pokemon-species/'
+// set the API base URL
+const baseUrl = "https://pokeapi.co/api/v2/"
+
+// grab the pokemon name element
 const pokemonName = document.getElementById("pokemon-name")
-const getPokemonButton = document.getElementById("get-pokemon-button")
-getPokemonButton.addEventListener('click', getPokeName)
+
+// Grab the search bar element
+const searchButton = document.getElementById("get-pokemon-button")
+// add click event listener to for search pokemon
+searchButton.addEventListener("click", searchPokemon)
+
+// grab the text-input element
+const searchInput = document.getElementById("text-input")
+/**
+ * add event listener - will enable button if search has data
+ * will disable button if search empty
+ */
+searchInput.addEventListener("input", () => {
+  if (searchInput.checkValidity()) {
+    searchButton.disabled = false
+  } else {
+    searchButton.disabled = true
+  }
+})
 
 function updateNameHeading(name) {
   pokemonName.innerText = name
 }
 
-async function getPokeName() {
+async function searchPokemon() {
   pokemonName.innerText = "...loading"
-  let response = await fetch(baseUrl + 1);
-  let data = await response.json()
-  const name = data.name
-  updateNameHeading(name)
+  const searchValue = searchInput.value
+
+  try {
+    const response = await fetch(`${baseUrl}pokemon/${searchValue}`);
+    const data = await response.json()
+    updateNameHeading(data.name)
+  } catch (_error) {
+    updateNameHeading("Uh oh, search failed")
+  }
 }
 
