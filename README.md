@@ -1,2 +1,4 @@
-# vanilla-js-jest-boilerplate
-boilerplate code to get started with vanilla JS web apps that use jest unit testing
+# pokedex
+Search any pokemon, and get info about it
+
+![](./img/screenshot.png)
